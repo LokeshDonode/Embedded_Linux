@@ -5,6 +5,7 @@ $ sudo apt-get install qemu-system-x86
 # Utilities
 # Command to install build essentials
 $ sudo apt-get install build-essential
+
 $ sudo apt-get install lzop flex bison libncurses-dev
 
 # Download Linux Kernel and BusyBox
