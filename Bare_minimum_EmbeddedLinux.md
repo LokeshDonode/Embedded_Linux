@@ -217,18 +217,18 @@ Now we can try multiple commands to review our bare minimum Linux.
 $ uname -a
 
 $ top
-top command display all the process running in Linux. You can see we have /bin/sh which is bourne shell . 
+>> top command display all the process running in Linux. You can see we have /bin/sh which is bourne shell . 
 Process ID (PID) of bourne shell is 1. and second process is kthreadd, process Id is 2. 
 kthreadd is the kernel thread started after init and all kernel threads are descendant of kthreadd.
 
 $ cat /proc/cmdline
-This command shows command line argument give to the kernel.
+> This command shows command line argument give to the kernel.
 
 $ cat /proc/cpuinfo
-you can review parameter related to CPU.  Model name is QEMU Virtual CPU
+>> you can review parameter related to CPU.  Model name is QEMU Virtual CPU
 
 $ dmesg
-This command shows all kernel messages which were routed to ttyS0.
+>> This command shows all kernel messages which were routed to ttyS0.
 You should able to find following information in kernel messages.
 
 
