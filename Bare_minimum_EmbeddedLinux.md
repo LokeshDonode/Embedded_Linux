@@ -67,7 +67,7 @@ Device Driver > Generic Driver Options > Maintain a devtmpfs filesystem to mount
 Device Driver > Generic Driver Options > Automount devtmpfs at /dev, after the kernel mounted the rootfs
 ![image](https://github.com/user-attachments/assets/d696cd37-88bc-4c36-9b26-a8e6c77fb61f)
 
-Option 8: Enable TTY
+> >Option 8: Enable TTY
 Device Driver > Character devices > Enable TTY
 ![image](https://github.com/user-attachments/assets/55da0f3c-9e2f-401b-9670-bc1d1636a1eb)
 
