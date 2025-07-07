@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/e03049c0-5d5e-43d5-bf39-02a6bdb5e781)// Booting a bare minimum linux using QEMU
+// Booting a bare minimum linux using QEMU
 # Command to install Qemu
 $ sudo apt-get install qemu-system-x86
 
