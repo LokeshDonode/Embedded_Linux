@@ -20,7 +20,7 @@ $ wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.15.5.tar.gz
 # Downloading latest Busybox -- he latest official BusyBox release is version 1.37.0, which was released on September 27, 2024
 $ wget https://busybox.net/downloads/busybox-1.37.0.tar.bz2
 
-**Creating Bare minimum Linux**
+## **Creating Bare minimum Linux**
 $ cd ~/workspace_kernel_mini
 
 # extracting the kernel source
