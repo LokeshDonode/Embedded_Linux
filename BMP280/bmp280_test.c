@@ -28,7 +28,7 @@ int main() {
     unsigned char data;
     read(fd, &data, 1);
 
-    printf("BME280 Chip ID: 0x%X\n", data);  // Should print 0x60
+    printf("BME280 Chip ID: 0x%X\n", data);  // Should print 0x58
 
     close(fd);
     return 0;
