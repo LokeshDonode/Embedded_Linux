@@ -26,7 +26,7 @@ $cd buildroot
 
 ## Configuring Buildroot
 
-$make menuconfig
+make menuconfig
 
 In the menu:
 
@@ -66,7 +66,7 @@ For example:
 
 ## Running in QEMU (You can test the image using QEMU. For x86)
 
-$qemu-system-x86_64 -kernel output/images/bzImage \
+qemu-system-x86_64 -kernel output/images/bzImage \
   -hda output/images/rootfs.ext2 \
   -append "root=/dev/sda" \
   -nographic
