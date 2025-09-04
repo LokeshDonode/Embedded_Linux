@@ -22,7 +22,7 @@ sudo apt install -y build-essential bison flex libncurses-dev wget tar gzip xz-u
 ## Getting Buildroot
 
 git clone https://git.busybox.net/buildroot
-$cd buildroot
+cd buildroot
 
 ## Configuring Buildroot
 
