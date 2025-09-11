@@ -26,7 +26,8 @@ g++ -g broken.cpp -o broken
 ./broken
 
 ## 🐞 Step 3: Start GDB
-$gdb broken
+
+gdb broken
 
 ## 🎯 Step 4: Set a Breakpoint
 
