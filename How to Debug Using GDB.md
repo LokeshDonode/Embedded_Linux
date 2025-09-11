@@ -19,13 +19,11 @@ Download the buggy program:
 
 ➡️ [`broken.cpp`](https://cs.baylor.edu/~donahoo/tools/gdb/broken.cpp)
 
----
-
 ## ⚙️ Step 2: Compile and Run
-Compile with debugging info:
 
-$g++ -g broken.cpp -o broken
-$./broken
+Compile with debugging info:
+g++ -g broken.cpp -o broken
+./broken
 
 ## 🐞 Step 3: Start GDB
 $gdb broken
@@ -74,15 +72,14 @@ Continue stepping:
 21    seriesValue += xpow / ComputeFactorial(k) ;
 (gdb) step
 
-
 Now inside ComputeFactorial():
 7  int fact=0;   // ⚠️ suspicious
 
 ## 🔍 Step 7: Inspect Execution
 
 Use backtrace to see where we are:
-(gdb) bt
 
+(gdb) bt
 #0  ComputeFactorial (number=0) at broken.cpp:7
 #1  0x08048907 in ComputeSeriesValue (x=2, n=3) at broken.cpp:21
 #2  0x08048a31 in main () at broken.cpp:43
@@ -102,7 +99,6 @@ Check variable value:
 
 (gdb) print fact
 $2 = 0
-
 Continue:
 (gdb) n
 13  return fact;
@@ -113,6 +109,8 @@ Continue:
 fact was initialized as 0
 Factorial is computed as:
 fact = fact * j;
+
+---
 
 
 
