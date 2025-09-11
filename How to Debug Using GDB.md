@@ -146,6 +146,7 @@ ulimit -c unlimited
 This tells the shell to allow core files of unlimited size.
 
 Start GDB with both the program and the core file:
+
 gdb testit core
 
 Expected Output:
