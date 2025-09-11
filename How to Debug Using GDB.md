@@ -138,6 +138,12 @@ A core dump file named core will be generated.
 
 ## 🐞 Step 4: Debug Using GDB
 
+>> 1. Enable Core Dumps Temporarily
+Run this before executing your program:
+
+ulimit -c unlimited
+This tells the shell to allow core files of unlimited size.
+
 Start GDB with both the program and the core file:
 gdb testit core
 
