@@ -1,0 +1,7 @@
+#!/bin/sh
+[ -d /proc ] || mkdir -p /proc
+[ -d /sys ] || mkdir -p /sys
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+[ -d /dev ] || mkdir -p /dev
+/bin/sh
