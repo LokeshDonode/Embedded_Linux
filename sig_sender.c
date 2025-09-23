@@ -8,12 +8,10 @@ void errExit(char *msg) {
     perror(msg);
     exit(EXIT_FAILURE);
 }
-
 int main(int argc, char *argv[]) {
     int opt;
     int signum = -1;
     pid_t pid = -1;
-
     // Parse options safely
     while ((opt = getopt(argc, argv, "s:p:")) != -1) {
         switch (opt) {
