@@ -30,7 +30,6 @@ Poky is the Yocto reference distribution.
 #Clone the Poky repository
 $ git clone git://git.yoctoproject.org/poky
 
-<img width="721" height="136" alt="image" src="https://github.com/user-attachments/assets/f8e7f984-468a-4e3a-9a42-b03705dbc4e7" />
 
 ## Setup build environment
 Run the "oe-init-build-env" script with the below command from the poky directory and it will auto-create the build directory.
@@ -39,7 +38,6 @@ Now your current working directory would be the build directory.
 # Setup the environment
 $ source oe-init-build-env
 
-<img width="878" height="346" alt="image" src="https://github.com/user-attachments/assets/d4bf3947-d85d-4c7a-a724-f354df07dcd4" />
 
 # Set machine name in local.conf
 We are building the image for the beaglebone black board so you need to set the machine name in conf/local.conf
@@ -53,7 +51,6 @@ $ vim conf/local.conf
 #For Beaglebone, machine variable should be beaglebone-yocto
 MACHINE ??= “beaglebone-yocto”
 
-<img width="998" height="463" alt="image" src="https://github.com/user-attachments/assets/36ce94f5-eea6-4c48-a10b-95f0e7afe0af" />
 
 # Start bitbake to build the image
 Bitbake is a task executor in the Yocto Project.
@@ -65,7 +62,6 @@ Bitbake is a task executor in the Yocto Project.
 # Run bitbake 
 $ bitbake core-minimal-image
 
-<img width="915" height="463" alt="image" src="https://github.com/user-attachments/assets/8c8b896b-d793-4ef4-a579-d58562bd375b" />
 
 # Create SD card Partition to boot the board
 Create the partition in the SD card and copy the generated file in those partitions.
