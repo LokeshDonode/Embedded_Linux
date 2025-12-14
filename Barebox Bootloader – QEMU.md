@@ -80,7 +80,7 @@ $make multi_v7_defconfig  -- for default configuration
 
 # Optional customization:
 
-$ make menuconfig
+$make menuconfig
 
 🏗️ Build Barebox
 
