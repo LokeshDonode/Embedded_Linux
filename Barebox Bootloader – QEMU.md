@@ -57,9 +57,11 @@ $sudo apt install \
 ## Build Steps
 
 # Verify toolchain:
+
 $arm-linux-gnueabihf-gcc --version
 
 📥 Get Barebox Source
+
 $git clone https://github.com/barebox/barebox.git
 $cd barebox
 
@@ -73,12 +75,15 @@ $export CROSS_COMPILE=arm-linux-gnueabihf-
 $make distclean
 
 # Configure for QEMU (ARMv7):
+
 $make multi_v7_defconfig  -- for default configuration
 
 # Optional customization:
+
 $ make menuconfig
 
 🏗️ Build Barebox
+
 $make -j$(nproc)
 
 # Expected output:
@@ -86,6 +91,7 @@ $make -j$(nproc)
 $images/barebox.bin
 
 ▶️ Run Barebox in QEMU
+
 $qemu-system-arm \
   -M virt \
   -cpu cortex-a15 \
@@ -99,6 +105,7 @@ barebox 20xx.xx
 barebox@multi-v7:/
 
 🧪 Basic Barebox Commands
+
 $help
 $ls /
 $devinfo
