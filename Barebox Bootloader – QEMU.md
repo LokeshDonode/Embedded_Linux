@@ -45,9 +45,8 @@ The `multi_v7_defconfig` target is ideal for learning because it:
 - Linux (Ubuntu/Debian recommended)
 
 ## Packages
-```bash
-sudo apt update
-sudo apt install \
+$sudo apt update
+$sudo apt install \
   gcc-arm-linux-gnueabihf \
   qemu-system-arm \
   bison flex \
@@ -55,7 +54,7 @@ sudo apt install \
   bc \
   device-tree-compiler
 
-### Build Steps
+## Build Steps
 
 # Verify toolchain:
 $arm-linux-gnueabihf-gcc --version
