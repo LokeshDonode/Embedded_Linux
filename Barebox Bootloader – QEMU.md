@@ -107,7 +107,7 @@ barebox@multi-v7:/
 🧪 Basic Barebox Commands
 
 $help
-$ls /
+$ls 
 $devinfo
 $printenv
 
