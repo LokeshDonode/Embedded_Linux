@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# 1. Update package lists
+echo "Updating package lists..."
+sudo apt update
+
+# 2. Install Dependencies
+# Combined into a single command for efficiency.
+# Removed duplicate entries (device-tree-compiler).
+echo "Installing dependencies..."
+sudo apt install -y \
+    gcc-arm-linux-gnueabihf \
+    build-essential \
+    git \
+    device-tree-compiler \
+    qemu-system-arm \
+    flex \
+    bison \
+    libssl-dev \
+    bc
+
+# 3. Clone U-Boot Repository
+echo "Cloning U-Boot repository..."
+git clone git://git.denx.de/u-boot.git
+cd u-boot || { echo "Failed to enter u-boot directory"; exit 1; }
+
+# 4. Checkout specific version
+# Corrected typo from 'v.2023.10' to standard tag format 'v2023.10'
+echo "Checking out version v2023.10..."
+git checkout v2023.10
+
+# 5. Set Environment Variables
+# Setting these exports ensures the makefile targets the correct architecture
+export ARCH=arm
+export CROSS_COMPILE=arm-linux-gnueabihf-
+
+# 6. Configure U-Boot for Raspberry Pi Zero W
+# 'rpi_0_w_defconfig' is the specific configuration for RPi Zero W
+echo "Configuring U-Boot..."
+make rpi_0_w_defconfig
+
+# 7. Build U-Boot
+# -j$(nproc) uses all available CPU cores to speed up compilation
+echo "Building U-Boot..."
+make -j$(nproc)
+
+# 8. Test U-Boot on QEMU
+echo "Starting QEMU..."
+# Note: Ensure you have a QEMU version that supports the 'raspi0' machine
+qemu-system-arm \
+  -M raspi0 \
+  -m 512M \
+  -nographic \
+  -kernel u-boot

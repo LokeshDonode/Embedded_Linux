@@ -23,3 +23,7 @@ MODULE_LICENSE("GPL");
 MODULE_AUTHOR("lokeshdonode@1994@gmail.com");
 MODULE_DESCRIPTION("A Simple hello world module");
 
+// make
+// sudo insmod hello_driver.ko
+// dmesg | tail
+// sudo rmmod hello_driver
