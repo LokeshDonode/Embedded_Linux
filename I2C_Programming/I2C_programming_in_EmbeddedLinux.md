@@ -81,9 +81,9 @@ I2C Utilities (CLI Testing)
 Before writing code, verify the hardware connection using Linux i2c-tools.
 
 1. Installation
-
 Bash
 sudo apt-get install i2c-tools
+
 2. Detect Device (i2cdetect)
 Scan I2C bus 2 to find the EEPROM.
 
@@ -97,6 +97,7 @@ Write the value 0x80 to register address 0x00.
 Bash
 # Syntax: i2cset -f -y [bus] [chip-addr] [data-addr] [value]
 $i2cset -f -y 2 0x50 0x00 0x80
+
 4. Read Data (i2cget)
 Read the value back from register 0x00.
 
