@@ -1,4 +1,4 @@
-# I2C EEPROM Interfacing on Embedded Linux (AT24C02)
+# I2C EEPROM(AT24C02) Interfacing on Embedded Linux 
 
 ## 📌 Overview
 This tutorial explains how to interface an **I2C EEPROM** with a board running **Embedded Linux**.  
