@@ -4,6 +4,8 @@
 #include <Adafruit_BMP280.h>
 #include <ArduinoMqttClient.h>
 
+// INTERFACING BMP280 With Arduino NANOESP32 over I2C
+
 // ================= BMP280 =================
 #define BMP280_ADDRESS 0x77
 #define SEALEVELPRESSURE_HPA (1013.25)
