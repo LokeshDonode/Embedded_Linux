@@ -16,8 +16,8 @@ float pressure;
 float altitude;
 
 // ================= WiFi =================
-const char* ssid = "LokeshD_2.4G";
-const char* password = "Lokesh@001";
+const char* ssid = "YOUR WIFI NAME";
+const char* password = "YOUR WIFI PASSWORD";
 
 // ================= MQTT =================
 WiFiClient wifiClient;
