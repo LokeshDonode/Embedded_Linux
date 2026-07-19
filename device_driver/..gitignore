@@ -1,0 +1,18 @@
+/ write a gitignore file to exclude file in a linux platform
+# Ignore all .log files
+*.log
+# Ignore all .tmp files
+*.tmp
+# Ignore all .bak files
+*.bak
+# Ignore all .swp files (Vim swap files)
+*.swp
+# Ignore all .DS_Store files (macOS)
+.DS_Store
+# Ignore vscode settings folder
+.vscode/
+# Ignore node_modules folder
+node_modules/
+# Ignore build output folders
+build/
+
