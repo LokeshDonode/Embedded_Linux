@@ -2,7 +2,7 @@
 
 void main()
 {
-	char *temp = "Paras";
+	char *temp = "Lokesh";
   int i;
 	i=0;
   temp[3]='F';
