@@ -1,5 +1,5 @@
 /***************************************************************************//**
-*  \file       driver.c
+*  \file       dynamic_allocation.c
 *
 *  \details    Simple linux driver (Dynamically allocating the Major and Minor number)
 *
