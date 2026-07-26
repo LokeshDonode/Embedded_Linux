@@ -1,5 +1,5 @@
 /***************************************************************************//**
-*  \file       driver.c
+*  \file       create_device_file.c
 *
 *  \details    Simple linux driver (Automatically Creating a Device file)
 *
