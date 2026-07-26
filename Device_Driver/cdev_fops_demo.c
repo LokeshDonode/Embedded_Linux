@@ -1,5 +1,5 @@
 /***************************************************************************//**
-*  \file       driver.c
+*  \file       cdev_fops_demo.c
 *
 *  \details    Simple Linux device driver (File Operations)
 *
