@@ -1,4 +1,4 @@
-/* at24c32_ioctl.h — shared between kernel module and userspace
+/* eeprom_at24c32_driver.h — shared between kernel module and userspace
  *
  * AT24C32 key facts:
  *   Capacity   : 32Kbit = 4096 bytes
@@ -14,8 +14,8 @@
  *   Must use raw i2c_transfer() and pack address into two bytes.
  */
 
-#ifndef AT24C32_IOCTL_H
-#define AT24C32_IOCTL_H
+#ifndef EEPROM_AT24C32_DRIVER_H
+#define EEPROM_AT24C32_DRIVER_H
 
 #include <linux/ioctl.h>
 #include <linux/types.h>
@@ -62,7 +62,6 @@ struct at24c32_page_rw {
  */
 #define AT24C32_READ_BYTE   _IOWR(AT24C32_MAGIC, 0, struct at24c32_byte_rw)
 #define AT24C32_WRITE_BYTE  _IOW (AT24C32_MAGIC, 1, struct at24c32_byte_rw)
-#define AT24C32_READ_PAGE   _IOWR(AT24C32_MAGIC, 2, struct at24c32_page_rw)
 #define AT24C32_WRITE_PAGE  _IOW (AT24C32_MAGIC, 3, struct at24c32_page_rw)
 #define AT24C32_CHIP_ERASE  _IO  (AT24C32_MAGIC, 4)
 
