@@ -3,9 +3,7 @@
 *
 *  \details    Simple Linux device driver (IOCTL)
 *
-*  \author     EmbeTronicX
-*
-*  \Tested with Linux raspberrypi 5.10.27-v7l-embetronicx-custom+
+*  \author     Lokesh Donode
 *
 *******************************************************************************/
 #include <linux/kernel.h>
