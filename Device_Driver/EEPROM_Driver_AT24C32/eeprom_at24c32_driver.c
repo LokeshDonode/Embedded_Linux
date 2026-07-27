@@ -1,4 +1,4 @@
-/* at24c32_driver.c — AT24C32 EEPROM driver (ZS-042 module)
+/* eeprom_at24c32_driver.c — AT24C32 EEPROM driver (ZS-042 module)
  *
  * Core lesson: WHY i2c_smbus_* fails for AT24C32
  * ─────────────────────────────────────────────────────────────────────────
@@ -29,7 +29,7 @@
 #include <linux/device.h>
 #include <linux/slab.h>
 #include <linux/delay.h>     /* msleep — required after every EEPROM write */
-#include "at24c32_ioctl.h"
+#include "eeprom_at24c32_driver.h"
 
 #define DRIVER_NAME       "at24c32"
 #define AT24C32_I2C_ADDR  0x57   /* ZS-042 default: A2=A1=A0=1 → 0b1010111 */
@@ -392,13 +392,14 @@ err_cdev:  unregister_chrdev_region(g_dev->devno, 1);
     return ret;
 }
 
-static void at24c32_remove(struct i2c_client *client)
+static int at24c32_remove(struct i2c_client *client)
 {
     struct at24c32_dev *dev = i2c_get_clientdata(client);
     device_destroy(dev->class, dev->devno);
     class_destroy(dev->class);
     cdev_del(&dev->cdev);
     unregister_chrdev_region(dev->devno, 1);
+    return 0;
 }
 
 /* ── I2C match tables ───────────────────────────────────────────────────── */
