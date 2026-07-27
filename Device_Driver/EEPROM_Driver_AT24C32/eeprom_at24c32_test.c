@@ -1,4 +1,4 @@
-/* at24c32_test.c — userspace ioctl test for AT24C32 EEPROM driver
+/* eeprom_at24c32_test.c — userspace ioctl test for AT24C32 EEPROM driver
  *
  * Build: gcc -Wall -o at24c32_test at24c32_test.c -I.
  * Run:   sudo ./at24c32_test
@@ -14,7 +14,7 @@
 #include <errno.h>
 
 #define __KERNEL__
-#include "at24c32_ioctl.h"
+#include "eeprom_at24c32_test.h"
 #undef __KERNEL__
 
 #define DEV_PATH "/dev/at24c32"
