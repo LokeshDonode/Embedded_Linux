@@ -22,7 +22,7 @@ The **AT24C32** is a 32Kbit (4096 bytes) serial EEPROM chip with the following c
 
 ### Why This Driver?
 
-Standard I2C SMBus functions (`i2c_smbus_read_byte_data()`, etc.) use **8-bit command fields**, which cannot express the 16-bit addresses required by AT24C32. This driver uses raw **i2c_transfer()** with manual byte packing to overcome this limitation.
+Standard I2C SMBus functions (`i2c_smbus_read_byte_data()`, etc.) use **8-bit command fields**, which cannot express the 16-bit addresses required by AT24C32. This driver uses raw **i2c_transfer()[...]
 
 ---
 
@@ -75,8 +75,8 @@ make all
 ```
 
 **Output files:**
-- `at24c32_driver.ko` — kernel module (compiled object)
-- `at24c32_test` — userspace test application
+- `eeprom_at24c32_driver.ko` — kernel module (compiled object)
+- `eeprom_at24c32_test` — userspace test application
 
 ---
 
@@ -89,7 +89,7 @@ make all
 echo at24c32 0x57 > /sys/bus/i2c/devices/i2c-1/new_device
 
 # Insert the kernel module
-sudo insmod at24c32_driver.ko
+sudo insmod eeprom_at24c32_driver.ko
 
 # Check kernel logs for success message
 dmesg | tail -10
@@ -114,7 +114,7 @@ crw------- 1 root root <major>,0 Jul 27 10:30 /dev/at24c32
 ### 3. Unload the Driver
 
 ```bash
-sudo rmmod at24c32_driver
+sudo rmmod eeprom_at24c32_driver
 echo 0x57 > /sys/bus/i2c/devices/i2c-1/delete_device
 ```
 
@@ -139,15 +139,15 @@ make unload clean
 
 ```bash
 # Build
-gcc -Wall -o at24c32_test at24c32_test.c -I.
+gcc -Wall -o eeprom_at24c32_test eeprom_at24c32_test.c -I.
 
 # Run (requires driver loaded)
-sudo ./at24c32_test
+sudo ./eeprom_at24c32_test
 ```
 
 ### Test Sequence
 
-The test application (`at24c32_test.c`) performs:
+The test application (`eeprom_at24c32_test.c`) performs:
 
 1. **WRITE_BYTE** — Write 0xAB to address 0x0010
 2. **READ_BYTE** — Read back and verify (expect 0xAB)
@@ -191,11 +191,11 @@ Opened /dev/at24c32
 ```
 Device_Driver/EEPROM_Driver_AT24C32/
 ├── README.md                          # This file
-├── at24c32_driver.c                   # Kernel module (main driver)
-├── at24c32_ioctl.h                    # Shared ioctl definitions
-├── at24c32_test.c                     # Userspace test application
+├── eeprom_at24c32_driver.c            # Kernel module (main driver)
+├── eeprom_at24c32_driver.h            # Shared ioctl definitions
+├── eeprom_at24c32_test.c              # Userspace test application
 ├── Makefile                           # Build configuration
-└── eeprom_driver_test.jpg             # Hardware test photos
+├── eeprom_driver_test.jpg             # Hardware test photos
 └── eeprom_driver_test_logs.jpg        # Test execution logs
 ```
 
@@ -512,7 +512,7 @@ i2cget -y -f 1 0x57 0x00 0x10 w   # 'w' = word (16-bit address)
 
 | Error | Cause | Solution |
 |-------|-------|----------|
-| `No such device` | `/dev/at24c32` not found | Load module: `insmod at24c32_driver.ko` |
+| `No such device` | `/dev/at24c32` not found | Load module: `insmod eeprom_at24c32_driver.ko` |
 | `Permission denied` | Non-root user | Run with `sudo` |
 | `ENOTTY` | Wrong magic/command number | Check ioctl header definitions |
 | `EINVAL` | Address/length out of bounds | Verify address < 4096, len ≤ 32 |
@@ -545,7 +545,7 @@ i2cget -y -f 1 0x57 0x00 0x10 w   # 'w' = word (16-bit address)
 
 ## File Descriptions
 
-### at24c32_driver.c
+### eeprom_at24c32_driver.c
 
 Main kernel module implementing:
 - I2C client probe/remove
@@ -554,7 +554,7 @@ Main kernel module implementing:
 - Page boundary enforcement
 - Chip erase logic
 
-### at24c32_ioctl.h
+### eeprom_at24c32_driver.h
 
 Shared header defining:
 - Ioctl command macros
@@ -562,7 +562,7 @@ Shared header defining:
 - Device magic number ('E')
 - Memory and page size constants
 
-### at24c32_test.c
+### eeprom_at24c32_test.c
 
 Comprehensive userspace test:
 - Single-byte read/write
