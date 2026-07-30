@@ -5,91 +5,191 @@
 #include <stdlib.h>
 #include <sys/ioctl.h>
 #include <linux/i2c-dev.h>
-#include <time.h>
 
 #define I2C_BUS "/dev/i2c-1"
 #define RTC_ADDR 0x68
-
-uint8_t dec_to_bcd(int val)
-{
-    return ((val / 10) << 4) | (val % 10);
-}
 
 int bcd_to_dec(uint8_t val)
 {
     return ((val >> 4) * 10) + (val & 0x0F);
 }
 
-int main(void)
+const char *days[] =
+{
+    "",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+    "Sun"
+};
+
+int days_in_month(int month, int year)
+{
+    switch(month)
+    {
+        case 1: return 31;
+        case 2:
+            if((year%4==0 && year%100!=0) || (year%400==0))
+                return 29;
+            else
+                return 28;
+
+        case 3: return 31;
+        case 4: return 30;
+        case 5: return 31;
+        case 6: return 30;
+        case 7: return 31;
+        case 8: return 31;
+        case 9: return 30;
+        case 10:return 31;
+        case 11:return 30;
+        case 12:return 31;
+    }
+
+    return 30;
+}
+
+int main()
 {
     int fd;
-    uint8_t buf[8];
-    time_t now;
-    struct tm *t;
 
     fd = open(I2C_BUS, O_RDWR);
-    if (fd < 0)
+    if(fd < 0)
     {
         perror("open");
         return -1;
     }
 
-    if (ioctl(fd, I2C_SLAVE, RTC_ADDR) < 0)
+    if(ioctl(fd, I2C_SLAVE, RTC_ADDR) < 0)
     {
         perror("ioctl");
-        close(fd);
         return -1;
     }
 
-    /* Get current system time */
-    now = time(NULL);
-    t = localtime(&now);
-
-    /* Prepare RTC registers */
-    buf[0] = 0x00;                          // Start register
-    buf[1] = dec_to_bcd(t->tm_sec);
-    buf[2] = dec_to_bcd(t->tm_min);
-    buf[3] = dec_to_bcd(t->tm_hour);
-    buf[4] = dec_to_bcd(t->tm_wday == 0 ? 7 : t->tm_wday);
-    buf[5] = dec_to_bcd(t->tm_mday);
-    buf[6] = dec_to_bcd(t->tm_mon + 1);
-    buf[7] = dec_to_bcd(t->tm_year % 100);
-
-    /* Write current time to RTC */
-    if (write(fd, buf, 8) != 8)
-    {
-        perror("RTC write");
-        close(fd);
-        return -1;
-    }
-
-    printf("RTC updated successfully.\n\n");
-
-    while (1)
+    while(1)
     {
         uint8_t reg = 0x00;
-        uint8_t data[7];
+        uint8_t rtc[7];
 
-        write(fd, &reg, 1);
-
-        if (read(fd, data, 7) != 7)
+        if(write(fd,&reg,1)!=1)
         {
-            perror("RTC read");
+            perror("write");
             break;
         }
 
-        printf("\rTime: %02d:%02d:%02d   Date: %02d/%02d/20%02d",
-               bcd_to_dec(data[2] & 0x3F),
-               bcd_to_dec(data[1]),
-               bcd_to_dec(data[0] & 0x7F),
-               bcd_to_dec(data[4]),
-               bcd_to_dec(data[5]),
-               bcd_to_dec(data[6]));
+        if(read(fd,rtc,7)!=7)
+        {
+            perror("read");
+            break;
+        }
+
+        int sec  = bcd_to_dec(rtc[0] & 0x7F);
+        int min  = bcd_to_dec(rtc[1]);
+
+        int hour;
+
+        if(rtc[2] & 0x40)
+        {
+            /* 12-hour mode */
+            hour = bcd_to_dec(rtc[2] & 0x1F);
+
+            if(rtc[2] & 0x20)
+            {
+                if(hour != 12)
+                    hour += 12;
+            }
+            else
+            {
+                if(hour == 12)
+                    hour = 0;
+            }
+        }
+        else
+        {
+            /* 24-hour mode */
+            hour = bcd_to_dec(rtc[2] & 0x3F);
+        }
+
+        int day   = bcd_to_dec(rtc[3]);
+        int date  = bcd_to_dec(rtc[4]);
+        int month = bcd_to_dec(rtc[5]);
+        int year  = 2000 + bcd_to_dec(rtc[6]);
+
+        /******** UTC -> IST ********/
+
+        min += 30;
+
+        if(min >= 60)
+        {
+            min -= 60;
+            hour++;
+        }
+
+        hour += 5;
+
+        if(hour >= 24)
+        {
+            hour -= 24;
+
+            day++;
+            if(day > 7)
+                day = 1;
+
+            date++;
+
+            if(date > days_in_month(month,year))
+            {
+                date = 1;
+                month++;
+
+                if(month > 12)
+                {
+                    month = 1;
+                    year++;
+                }
+            }
+        }
+
+        /******** Temperature ********/
+
+        uint8_t treg = 0x11;
+        uint8_t temp[2];
+
+        if(write(fd,&treg,1)!=1)
+        {
+            perror("temp write");
+            break;
+        }
+
+        if(read(fd,temp,2)!=2)
+        {
+            perror("temp read");
+            break;
+        }
+
+        float temperature =
+            (int8_t)temp[0] +
+            ((temp[1] >> 6) * 0.25);
+
+        printf("\r%s  %02d/%02d/%04d  %02d:%02d:%02d  Temp: %.2f C",
+               days[day],
+               date,
+               month,
+               year,
+               hour,
+               min,
+               sec,
+               temperature);
 
         fflush(stdout);
+
         sleep(1);
     }
 
     close(fd);
+
     return 0;
 }
